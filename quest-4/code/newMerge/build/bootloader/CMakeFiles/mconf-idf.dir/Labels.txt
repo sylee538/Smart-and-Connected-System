@@ -1,0 +1,13 @@
+# Target labels
+ mconf-idf
+# Source files and their labels
+/Users/eddie/esp/newMerge/build/bootloader/CMakeFiles/mconf-idf
+/Users/eddie/esp/newMerge/build/bootloader/CMakeFiles/mconf-idf.rule
+/Users/eddie/esp/newMerge/build/bootloader/CMakeFiles/mconf-idf-complete.rule
+/Users/eddie/esp/newMerge/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-install.rule
+/Users/eddie/esp/newMerge/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-mkdir.rule
+/Users/eddie/esp/newMerge/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-download.rule
+/Users/eddie/esp/newMerge/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-update.rule
+/Users/eddie/esp/newMerge/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-patch.rule
+/Users/eddie/esp/newMerge/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-configure.rule
+/Users/eddie/esp/newMerge/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-build.rule

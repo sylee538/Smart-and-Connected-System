@@ -1,0 +1,64 @@
+
+<!doctype html>
+<html>
+
+
+<head>
+	<title>Quest 6</title>
+	<!-- Source for Socket.io - this one is local -->
+	<script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+	<!-- HTML layout -->
+  <h1 align="center">Quest 6 Autonomous Navigation by Team 1</h1>
+  <div class="bgimg w3-display-container w3-text-black"> </div>
+  <center>
+    <iframe src="http://192.168.1.113:8081/" height="320px" width="640px" scrolling="no"></iframe>
+    <p><button id=stop onclick="stop()">STOP</button></p>
+    <p><button id=forward onclick="drive_forward()">FORWARD</button></p>
+    <p><button id=left onclick="turn_left()">LEFT</button></p>
+    <p><button id=right onclick="turn_right()">RIGHT</button></p>
+    <p><button id=backward onclick="drive_backward()">BACKWARD</button></p>
+
+
+</body>
+
+
+
+	<!-- Script to handle socket -->
+	<script>
+  var direction;
+		var socket = io();
+		socket.on('message', function(msg){
+			console.log(msg);
+			document.getElementById("message_disp").innerHTML = msg;
+		});
+
+    function stop(){
+      direction = 0;
+      socket.emit('drive', direction);
+    }
+
+    function drive_forward(){
+      direction = 1;
+      socket.emit('drive', direction);
+    }
+
+    function turn_left(){
+      direction = 2;
+      socket.emit('drive', direction);
+    }
+
+    function turn_right(){
+      direction = 3;
+      socket.emit('drive', direction);
+    }
+
+    function drive_backward(){
+      direction = 4;
+      socket.emit('drive', direction);
+    }
+	</script>
+
+</html>

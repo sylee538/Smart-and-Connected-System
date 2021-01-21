@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Socket.IO Control</title>
+</head>
+
+<body>
+  <ul id="messages"></ul>
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script>
+    var socket = io();
+
+    var buttonPress = function() {
+      socket.emit('Run', 'message');
+    }
+    var buttonPress1 = function() {
+      socket.emit('Stop', 'message');
+    }
+  </script>
+  <div>
+    <button id='Run' onclick="buttonPress()"> Run </button>
+    <button id='Stop' onclick="buttonPress1()"> Stop </button>
+  </div>
+</body>
+
+</html>

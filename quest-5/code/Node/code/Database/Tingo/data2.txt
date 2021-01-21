@@ -1,0 +1,4 @@
+fob_ID	hub_ID	Person	time Location	Presence
+fob1	hub1	Rene	4:20 Boston	0
+fob2	hub1	Kelly	4:21 Boston	0
+fob3	hub1	Edward	4.24 Boston	0

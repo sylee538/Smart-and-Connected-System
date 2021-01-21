@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+  <meta charset="utf-8" />
+  <script type="text/javascript">
+    window.onload = function() {
+      var socket = io("http://localhost:3000/");
+      var dataPoints1 = [];
+      var dataPoints2 = [];
+      var yValue1;
+      var yValue2;
+
+      $.getJSON("data.json", function(data) {
+        $.each(data, function(key, val) {
+          switch (val.Source) {
+            case "dataA":
+              dataPoints1.push({
+                x: val.x,
+                y: val.y
+              });
+              break;
+            case "dataB":
+              dataPoints2.push({
+                x: val.x,
+                y: val.y
+              });
+              break;
+          }
+        });
+      });
+      // $.getJSON("data.json", function(json) {
+      //   console.log(json); // this will show the info it in firebug console
+      // });
+
+      var chart = new CanvasJS.Chart("chartContainer", {
+        zoomEnabled: true,
+        title: {
+          text: "Share Value of Two Companies"
+        },
+        axisX: {
+          title: "chart updates every 3 secs"
+        },
+        axisY: {
+          prefix: "$",
+          includeZero: false
+        },
+        toolTip: {
+          shared: true
+        },
+        legend: {
+          cursor: "pointer",
+          verticalAlign: "top",
+          fontSize: 22,
+          fontColor: "dimGrey",
+          itemclick: toggleDataSeries
+        },
+        data: [{
+            type: "line",
+            xValueType: "dateTime",
+            yValueFormatString: "$####.00",
+            xValueFormatString: "hh:mm:ss TT",
+            showInLegend: true,
+            name: "Company A",
+            dataPoints: dataPoints1
+          },
+          {
+            type: "line",
+            xValueType: "dateTime",
+            yValueFormatString: "$####.00",
+            showInLegend: true,
+            name: "Company B",
+            dataPoints: dataPoints2
+          }
+        ]
+      });
+
+
+      function toggleDataSeries(e) {
+        if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+          e.dataSeries.visible = false;
+        } else {
+          e.dataSeries.visible = true;
+        }
+        chart.render();
+      }
+
+
+
+      function updateChart() {
+        socket.on('data_a', function(data) {
+          dataPoints1.push(data);
+          yValue1 = data.y;
+        });
+        socket.on('data_b', function(data) {
+          dataPoints2.push(data);
+          yValue2 = data.y;
+        });
+
+        // updating legend text with  updated with y Value
+        chart.options.data[0].legendText = " Company A  $" + yValue1;
+        chart.options.data[1].legendText = " Company B  $" + yValue2;
+        chart.render();
+      }
+      // generates first set of dataPoints
+      setInterval(function() {
+        updateChart()
+      }, 1000);
+
+    }
+  </script>
+</head>
+
+<body>
+  <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+</body>
+
+</html>

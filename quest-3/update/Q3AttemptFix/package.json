@@ -1,0 +1,16 @@
+{
+  "name": "socket-chat-example",
+  "version": "0.0.1",
+  "description": "my first socket.io app",
+  "dependencies": {
+    "canvasjs": "^1.8.1",
+    "dgram": "^1.0.1",
+    "express": "^4.17.1",
+    "jquery": "^3.4.1",
+    "socket.io": "^1.7.4",
+    "sscanf": "^0.8.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}

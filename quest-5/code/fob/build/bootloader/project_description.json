@@ -1,0 +1,18 @@
+{
+    "project_name":       "bootloader",
+    "project_path":       "/Users/eddie/esp/esp-idf/components/bootloader/subproject",
+    "build_dir":          "/Users/eddie/esp/fob/build/bootloader",
+    "config_file":        "/Users/eddie/esp/fob/sdkconfig",
+    "config_defaults":    "",
+    "app_elf":            "bootloader.elf",
+    "app_bin":            "bootloader.bin",
+    "git_revision":       "v4.1-dev-141-ga7e8d87d3-dirty",
+    "phy_data_partition": "",
+    "monitor_baud" : "115200",
+    "config_environment" : {
+        "COMPONENT_KCONFIGS" : "/Users/eddie/esp/esp-idf/components/efuse/Kconfig;/Users/eddie/esp/esp-idf/components/esp32/Kconfig;/Users/eddie/esp/esp-idf/components/esp_common/Kconfig;/Users/eddie/esp/esp-idf/components/log/Kconfig;/Users/eddie/esp/esp-idf/components/spi_flash/Kconfig",
+        "COMPONENT_KCONFIGS_PROJBUILD" : "/Users/eddie/esp/esp-idf/components/bootloader/Kconfig.projbuild;/Users/eddie/esp/esp-idf/components/esptool_py/Kconfig.projbuild;/Users/eddie/esp/esp-idf/components/partition_table/Kconfig.projbuild"
+    },
+    "build_components" : [ "bootloader", "bootloader_support", "efuse", "esp32", "esp_common", "esp_rom", "esptool_py", "log", "main", "micro-ecc", "partition_table", "soc", "spi_flash", "xtensa", "" ],
+    "build_component_paths" : [ "/Users/eddie/esp/esp-idf/components/bootloader", "/Users/eddie/esp/esp-idf/components/bootloader_support", "/Users/eddie/esp/esp-idf/components/efuse", "/Users/eddie/esp/esp-idf/components/esp32", "/Users/eddie/esp/esp-idf/components/esp_common", "/Users/eddie/esp/esp-idf/components/esp_rom", "/Users/eddie/esp/esp-idf/components/esptool_py", "/Users/eddie/esp/esp-idf/components/log", "/Users/eddie/esp/esp-idf/components/bootloader/subproject/main", "/Users/eddie/esp/esp-idf/components/bootloader/subproject/components/micro-ecc", "/Users/eddie/esp/esp-idf/components/partition_table", "/Users/eddie/esp/esp-idf/components/soc", "/Users/eddie/esp/esp-idf/components/spi_flash", "/Users/eddie/esp/esp-idf/components/xtensa", "" ]
+}

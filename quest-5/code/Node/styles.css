@@ -1,0 +1,30 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Noto Sans KR', sans-serif;
+  text-align: center;
+}
+
+body {
+  margin: 0;
+  background: url('./background.jpg') no-repeat 50% fixed / cover;
+  backgrou
+  min-width: 768px;
+  height: 100vh;
+}
+
+.buttons button {
+  width: 222px;
+  height: 38px;
+  border-radius: 9px;
+  border: none;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+  margin: 0 4px;
+  font-size: 14px;
+}
+
+table {
+  text-align: center;
+  position: relative;
+  left: 45%;
+}

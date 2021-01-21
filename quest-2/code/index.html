@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <script type="text/javascript">
+    window.onload = function() {
+
+      // Initialize array for data storage
+      var dataPoints1 = [];
+      var dataPoints2 = [];
+      var dataPoints3 = [];
+      var dataPoints4 = [];
+
+      // From CanvasJS
+      var chart = new CanvasJS.Chart("chartContainer", {
+        zoomEnabled: true,
+        title: {
+          text: "Share Value of 4 Companies"
+        },
+        axisX: {
+          title: "chart updates every 2 secs"
+        },
+        axisY: {
+          // prefix: "",
+          includeZero: false
+        },
+        toolTip: {
+          shared: true
+        },
+        legend: {
+          cursor: "pointer",
+          verticalAlign: "top",
+          fontSize: 22,
+          fontColor: "dimGrey",
+          itemclick: toggleDataSeries
+        },
+        data: [{
+            type: "line",
+            xValueType: "dateTime",
+            yValueFormatString: "####",
+            xValueFormatString: "hh:mm:ss TT",
+            showInLegend: true,
+            name: "IR",
+            dataPoints: dataPoints1
+          },
+          {
+            type: "line",
+            xValueType: "dateTime",
+            yValueFormatString: "####",
+            showInLegend: true,
+            name: "Ultra",
+            dataPoints: dataPoints2
+          },
+          {
+            type: "line",
+            xValueType: "dateTime",
+            yValueFormatString: "####",
+            showInLegend: true,
+            name: "Temp",
+            dataPoints: dataPoints3
+          },
+          {
+            type: "line",
+            xValueType: "dateTime",
+            yValueFormatString: "####",
+            showInLegend: true,
+            name: "Volt",
+            dataPoints: dataPoints4
+          }
+        ]
+      });
+
+      console.log("dataPoints3 :");
+      console.log(dataPoints3);
+
+      function toggleDataSeries(e) {
+        if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+          e.dataSeries.visible = false;
+        } else {
+          e.dataSeries.visible = true;
+        }
+        chart.render();
+      }
+
+      var updateInterval = 2000;
+      // initial value
+
+      function updateChart(count) {
+        count = count || 1;
+
+
+
+          // pushing the new values
+          $.getJSON("data.json", function(data) {
+            $.each(data, function(key, val) {
+
+              switch (val.Source) {
+                case "IR":
+                  dataPoints1.push({
+                    x: val.Time,
+                    y: val.Value
+                  });
+                  break;
+                case "Ultra":
+                  dataPoints2.push({
+                    x: val.Time,
+                    y: val.Value
+                  });
+                  break;
+                case "Temp":
+                  dataPoints3.push({
+                    x: val.Time,
+                    y: val.Value
+                  });
+                  break;
+                case "Volt":
+                  dataPoints4.push({
+                    x: val.Time,
+                    y: val.Value
+                  });
+                  break;
+
+            }
+            });
+          });
+
+
+
+        // updating legend text with  updated with y Value
+        chart.options.data[0].legendText = chart.options.data[0].name;
+        chart.options.data[1].legendText = chart.options.data[1].name;
+        chart.options.data[2].legendText = chart.options.data[2].name;
+        chart.options.data[3].legendText = chart.options.data[3].name;
+        chart.render();
+      }
+      // generates first set of dataPoints
+      updateChart(100);
+      setInterval(function() {
+        updateChart()
+      }, updateInterval);
+
+    }
+  </script>
+</head>
+
+<body>
+  <ul id="messages"></ul>
+
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="node_modules/socket.io-client/dist/socket.io.js"></script>
+  <script>
+    var socket = io('http://localhost');
+    socket.on('news', function(data) {
+      socket.emit('my other event', {
+        my: 'data'
+      });
+    });
+  </script>
+
+  <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+</body>
+
+</html>

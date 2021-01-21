@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Quest 5</title>
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Noto Sans KR', sans-serif;
+      text-align: center;
+    }
+
+    body {
+      margin: 0;
+      background: url('background.jpg') no-repeat 50% fixed / cover;
+      background min-width: 768px;
+      height: 100vh;
+    }
+
+    .buttons button {
+      width: 222px;
+      height: 38px;
+      border-radius: 9px;
+      border: none;
+      background-color: #ffffff;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+      margin: 0 4px;
+      font-size: 14px;
+    }
+
+    table {
+      text-align: center;
+      position: relative;
+      left: 45%;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Secure Key by Team 1</h1>
+  </header>
+  <div class="buttons">
+    <button id="lock_Rene">Lock Rene</button>
+    <button id="lock_Eddie">Lock Eddie</button>
+    <button id="lock_Kelly">Lock Kelly</button>
+    <button id-'Run' onclick="buttonPress()">Run</button>
+  </div>
+  <ul style="list-style-type:none;">
+    <table>
+      <tr>
+        <th> User </th>
+        <th> Time </th>
+      </tr>
+
+    </table>
+
+  </ul>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+
+  <script>
+    var socket = io();
+    $("#lock_Rene").on('click', add);
+
+    var buttonPress = function() {
+      socket.emit('Run', 'message');
+      console.log("CLICK")
+    }
+
+    function add() {
+      var dt = new Date();
+      var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+      $('table tr:last-child').after('<tr> <td> Rene </td> <td>' + time + '</td></tr>');
+    }
+  </script>
+
+</body>
+
+</html>

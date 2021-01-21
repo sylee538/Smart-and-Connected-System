@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Socket.IO Control</title>
+  <script src="/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+  <meta charset="utf-8" />
+  <script type="text/javascript">
+    window.onload = function() {
+      var socket = io("http://localhost:8080/");
+      var dataSTEP = [];
+      var dataC = [];
+      var dataBAT = [];
+      var yValue1;
+      var yValue2;
+      var yValue3;
+
+      var chart = new CanvasJS.Chart("chartContainer", {
+        zoomEnabled: true,
+        title: {
+          text: "Wearable Data"
+        },
+        axisX: {
+          title: "chart updates every 2 secs"
+        },
+        axisY: {
+          includeZero: false
+        },
+        toolTip: {
+          shared: true
+        },
+        legend: {
+          cursor: "pointer",
+          verticalAlign: "top",
+          fontSize: 22,
+          fontColor: "dimGrey",
+          itemclick: toggleDataSeries
+        },
+        data: [{
+            type: "line",
+            xValueType: "dateTime",
+            yValueFormatString: "#####",
+            xValueFormatString: "hh:mm:ss TT",
+            showInLegend: true,
+            name: "Step Counter",
+            dataPoints: dataSTEP
+          },
+          {
+            type: "line",
+            xValueType: "dateTime",
+            yValueFormatString: "##.00 C",
+            showInLegend: true,
+            name: "Temperature",
+            dataPoints: dataC
+          },
+          {
+            type: "line",
+            xValueType: "dateTime",
+            yValueFormatString: "##.00 V",
+            xValueFormatString: "hh:mm:ss TT",
+            showInLegend: true,
+            name: "Battery",
+            dataPoints: dataBAT
+          }
+        ]
+      });
+
+      function toggleDataSeries(e) {
+        if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+          e.dataSeries.visible = false;
+        } else {
+          e.dataSeries.visible = true;
+        }
+        chart.render();
+      }
+
+      function updateChart() {
+        socket.on('data_STEP', function(data) {
+          dataSTEP.push(data);
+          yValue1 = data.y;
+          console.log(data);
+        });
+        socket.on('data_C', function(data) {
+          dataC.push(data);
+          yValue2 = data.y;
+          console.log(data);
+        });
+        socket.on('data_BAT', function(data) {
+          dataBAT.push(data);
+          yValue3 = data.y;
+          console.log(data);
+        });
+
+        // updating legend text with  updated with y Value
+        chart.options.data[0].legendText = " Step Counter: " + yValue1;
+        chart.options.data[1].legendText = " Temperature: " + yValue2;
+        chart.options.data[2].legendText = " Battery:  " + yValue3;
+        chart.render();
+      }
+      // generates first set of dataPoints
+      setInterval(function() {
+        updateChart()
+      }, 1000);
+
+    }
+  </script>
+</head>
+
+<body>
+  <ul id="messages"></ul>
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script>
+    var socket = io();
+
+    var buttonPress = function() {
+      socket.emit('W_R', 'message');
+      console.log("Press");
+    }
+    var buttonPress1 = function() {
+      socket.emit('W_S', 'message');
+      console.log("Press");
+    }
+    var buttonPress2 = function() {
+      socket.emit('A_R', 'message');
+      console.log("Press");
+    }
+    // var buttonPress3 = function() {
+    //   socket.emit('A_S', 'message');
+    //   console.log("Press");
+    // }
+  </script>
+  <div>
+    <p>Water Timer</p>
+    <button id='Water Timer On' onclick="buttonPress()"> Turn On </button>
+    <button id='Water Timer Off' onclick="buttonPress1()"> Turn Off </button>
+  </div>
+  <div>
+    <p>On-Device Alert</p>
+    <button id='Alert On' onclick="buttonPress2()"> Alert On </button>
+    <!-- <button id='Alert Off' onclick="buttonPress3()"> Turn Off </button> -->
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+</body>
+
+
+</html>
